@@ -5,7 +5,6 @@ const { spawnSync } = require('child_process');
 const projectRoot = join(__dirname, '..');
 const buildDir = join(projectRoot, 'build');
 const masterPngPath = join(buildDir, 'logo-master.png');
-const svgPath = join(buildDir, 'logo-source.svg');
 const pngPath = join(buildDir, 'logo-source.png');
 const iconsetDir = join(buildDir, 'icon.iconset');
 const icnsPath = join(buildDir, 'icon.icns');

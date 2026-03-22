@@ -16,7 +16,7 @@ This project is not affiliated with, endorsed by, or sponsored by X Corp.
 ## Development
 
 ```bash
-cd x-claude-desktop
+cd MacX
 npm install
 npm start
 ```
@@ -47,12 +47,12 @@ To rebuild the app icon set from that image:
 npm run build:assets
 ```
 
-An editable vector source can still live at `build/logo-source.svg`, but the build uses `logo-master.png` directly.
+The build uses `logo-master.png` directly.
 
 ## Build the App
 
 ```bash
-cd x-claude-desktop
+cd MacX
 npm run build:mac:signed
 ```
 
@@ -69,7 +69,7 @@ npm run open:mac
 ## Build a Shareable Copy
 
 ```bash
-cd x-claude-desktop
+cd MacX
 npm run package:share
 ```
 

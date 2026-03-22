@@ -311,7 +311,7 @@ function createWindow(initialUrl = 'https://x.com') {
       contextIsolation: true,
       nodeIntegration: false,
       preload: preloadPath,
-      partition: 'persist:x-claude',
+      partition: 'persist:macx',
       spellcheck: false,
       backgroundThrottling: true,
       devTools: !app.isPackaged,

@@ -4,6 +4,8 @@ MacX is an unofficial desktop wrapper for `x.com` built with Electron. It keeps 
 
 This project is not affiliated with, endorsed by, or sponsored by X Corp.
 
+[![Follow on X](https://img.shields.io/twitter/follow/stamatiou?style=social)](https://x.com/stamatiou)
+
 ## Features
 
 - Warm custom theme with a native-feeling macOS presentation
@@ -19,7 +21,7 @@ This project is not affiliated with, endorsed by, or sponsored by X Corp.
 
 ![MacX login screen](media/screenshot-login.png)
 
-### Search
+### Home
 
 ![MacX search view](media/screenshot-home.png)
 

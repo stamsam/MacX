@@ -1,0 +1,48 @@
+{
+  "name": "macx",
+  "version": "1.0.0",
+  "description": "Unofficial desktop wrapper for X with a warm custom theme, native shortcuts, and lite mode",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:assets": "node scripts/build-brand-assets.js",
+    "build:mac": "electron-builder --mac dir",
+    "sign:mac": "node scripts/sign-mac-app.js",
+    "build:mac:signed": "npm run build:mac && npm run sign:mac",
+    "zip:mac": "node scripts/zip-mac-app.js",
+    "package:share": "npm run build:mac:signed && npm run zip:mac",
+    "open:mac": "open dist/mac-arm64/MacX.app"
+  },
+  "author": "Sam Stamatiou",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.samstamatiou.macx",
+    "productName": "MacX",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "theme.css",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.social-networking",
+      "icon": "build/icon.icns",
+      "target": [
+        {
+          "target": "dir",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ]
+    }
+  }
+}

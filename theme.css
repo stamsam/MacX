@@ -1,0 +1,715 @@
+/* ═══════════════════════════════════════════════════════════
+   X Desktop — Claude Warm Grid Theme v4
+   ═══════════════════════════════════════════════════════════ */
+
+:root,
+html {
+  --claude-bg: #f6f3ed;
+  --claude-surface: rgba(253, 251, 247, 0.85);
+  --claude-surface-solid: #fdfbf7;
+  --claude-surface-2: #f1ede5;
+  --claude-surface-hover: rgba(241, 237, 229, 0.95);
+  --claude-border: #ddd7cc;
+  --claude-border-light: #e8e2d8;
+  --claude-text: #24221d;
+  --claude-muted: #6f6a5f;
+  --claude-accent: #d4a58d;
+  --claude-accent-hover: #c8916f;
+  --claude-blue: #5a8fa8;
+  --claude-blue-soft: rgba(90, 143, 168, 0.12);
+  --claude-grid-size: 62px;
+  --claude-grid-line: rgba(92, 85, 74, 0.075);
+  --claude-card-shadow: 0 1px 3px rgba(36, 34, 29, 0.06), 0 4px 14px rgba(36, 34, 29, 0.04);
+  --claude-card-shadow-hover: 0 2px 8px rgba(36, 34, 29, 0.09), 0 6px 20px rgba(36, 34, 29, 0.06);
+  --claude-radius: 16px;
+  --claude-radius-sm: 12px;
+  color-scheme: light;
+
+  /* Override X core tokens */
+  --rweb-background-color: rgb(246, 243, 237) !important;
+  --rweb-text-color: rgb(36, 34, 29) !important;
+  --rweb-secondary-text-color: rgb(111, 106, 95) !important;
+  --rweb-border-color: rgb(221, 215, 204) !important;
+}
+
+html.macx-lite-mode {
+  --claude-surface: rgba(253, 251, 247, 0.97);
+  --claude-surface-solid: #fdfbf7;
+  --claude-surface-hover: rgba(246, 243, 237, 0.98);
+  --claude-grid-line: rgba(92, 85, 74, 0.05);
+  --claude-card-shadow: 0 1px 2px rgba(36, 34, 29, 0.04);
+  --claude-card-shadow-hover: 0 2px 6px rgba(36, 34, 29, 0.06);
+}
+
+
+/* ── Base grid background ─────────────────────────────────── */
+
+html,
+body,
+#react-root {
+  background-color: var(--claude-bg) !important;
+  background-image:
+    linear-gradient(var(--claude-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--claude-grid-line) 1px, transparent 1px) !important;
+  background-size: var(--claude-grid-size) var(--claude-grid-size) !important;
+  background-attachment: fixed !important;
+  color: var(--claude-text) !important;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, serif !important;
+}
+
+body {
+  padding-top: var(--macx-topbar-height, 0px) !important;
+  box-sizing: border-box !important;
+}
+
+#macx-desktop-chrome {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--macx-topbar-height, 0px);
+  background:
+    linear-gradient(rgba(253, 251, 247, 0.92), rgba(246, 243, 237, 0.86)),
+    linear-gradient(var(--claude-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--claude-grid-line) 1px, transparent 1px) !important;
+  background-size:
+    auto,
+    var(--claude-grid-size) var(--claude-grid-size),
+    var(--claude-grid-size) var(--claude-grid-size) !important;
+  border-bottom: 1px solid rgba(221, 215, 204, 0.9) !important;
+  backdrop-filter: blur(10px) saturate(115%) !important;
+  -webkit-app-region: drag;
+  z-index: 999999 !important;
+  pointer-events: auto;
+}
+
+html.macx-lite-mode #macx-desktop-chrome {
+  backdrop-filter: none !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   TRANSPARENT SCAFFOLDING — let grid show through
+   Be specific to avoid nuking profile banners, images, etc.
+   ══════════════════════════════════════════════════════════ */
+
+#react-root > div,
+#react-root > div > div,
+#layers,
+#layers > div,
+main,
+main > div,
+main > div > div,
+main > div > div > div,
+section,
+section > div,
+aside,
+aside > div,
+nav[role='navigation'],
+nav[role='navigation'] > div,
+nav[aria-label],
+nav[aria-label] > div,
+[data-testid='primaryColumn'],
+[data-testid='primaryColumn'] > div,
+[data-testid='sidebarColumn'],
+[data-testid='sidebarColumn'] > div,
+[data-testid='sidebarColumn'] > div > div,
+[data-testid='DMDrawer'],
+[data-testid='SideNav'],
+[data-testid='SideNav'] > div,
+[role='main'],
+[role='main'] > div,
+[role='main'] > div > div,
+header[role='banner'],
+header[role='banner'] > div,
+nav,
+nav > div {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Column borders */
+[data-testid='primaryColumn'] {
+  border-color: var(--claude-border) !important;
+}
+
+[data-testid='sidebarColumn'] {
+  border-color: transparent !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   SIDEBAR — NUCLEAR BACKGROUND CLEANUP
+   Only target sidebar internals, not the whole page
+   ══════════════════════════════════════════════════════════ */
+
+/* Nuke all white backgrounds inside sidebar */
+[data-testid='sidebarColumn'] div {
+  background-color: transparent !important;
+}
+
+/* Keep the warm card treatment on actual sidebar cards only. */
+[data-testid='sidebarColumn'] section,
+[data-testid='sidebarColumn'] aside {
+  background: rgba(253, 251, 247, 0.92) !important;
+  border: 1.5px solid #ccc5b8 !important;
+  border-radius: var(--claude-radius) !important;
+  box-shadow: 0 2px 6px rgba(36, 34, 29, 0.08), 0 6px 20px rgba(36, 34, 29, 0.05) !important;
+  backdrop-filter: blur(8px) saturate(110%) !important;
+  margin-bottom: 16px !important;
+  overflow: hidden !important;
+}
+
+/* Card headings */
+[data-testid='sidebarColumn'] h2,
+[data-testid='sidebarColumn'] [role='heading'] {
+  color: var(--claude-text) !important;
+  font-weight: 800 !important;
+}
+
+/* Trend / user rows */
+[data-testid='sidebarColumn'] [data-testid='trend'],
+[data-testid='sidebarColumn'] [data-testid='UserCell'] {
+  border-bottom: 1px solid var(--claude-border-light) !important;
+  transition: background 140ms ease;
+}
+
+[data-testid='sidebarColumn'] [data-testid='trend']:hover,
+[data-testid='sidebarColumn'] [data-testid='UserCell']:hover {
+  background: var(--claude-surface-hover) !important;
+}
+
+/* "Show more" links */
+[data-testid='sidebarColumn'] a[role='link']:last-child:hover {
+  background: var(--claude-blue-soft) !important;
+}
+
+/* Premium upsell button */
+[data-testid='sidebarColumn'] aside [role='button'] {
+  background: var(--claude-accent) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: var(--claude-radius-sm) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 8px rgba(212, 165, 141, 0.3) !important;
+  transition: background 160ms ease, transform 120ms ease;
+}
+
+[data-testid='sidebarColumn'] aside [role='button']:hover {
+  background: var(--claude-accent-hover) !important;
+  transform: translateY(-1px);
+}
+
+[data-testid='sidebarColumn'] aside [role='button'] span {
+  color: #fff !important;
+}
+
+/* Sidebar sticky search header area */
+[data-testid='sidebarColumn'] > div > div > div > div:first-child {
+  backdrop-filter: blur(12px) !important;
+}
+
+/* Follow button (not yet following) — warm accent filled */
+[data-testid$='-follow'] {
+  background: var(--claude-accent) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 8px rgba(212, 165, 141, 0.3) !important;
+  transition: background 160ms ease, transform 120ms ease;
+}
+
+[data-testid$='-follow']:hover {
+  background: var(--claude-accent-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(212, 165, 141, 0.4) !important;
+}
+
+[data-testid$='-follow'] span {
+  color: #fff !important;
+}
+
+/* Following button (already following) — subtle outlined style */
+[data-testid$='-unfollow'] {
+  background: transparent !important;
+  color: var(--claude-text) !important;
+  border: 1.5px solid var(--claude-border) !important;
+  border-radius: 999px !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+[data-testid$='-unfollow']:hover {
+  border-color: #e07060 !important;
+  background: rgba(224, 112, 96, 0.08) !important;
+}
+
+[data-testid$='-unfollow'] span {
+  color: var(--claude-text) !important;
+}
+
+[data-testid$='-unfollow']:hover span {
+  color: #c05040 !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   TWEET CARDS
+   ══════════════════════════════════════════════════════════ */
+
+[data-testid='primaryColumn'] article,
+[role='main'] [data-testid='cellInnerDiv'] article {
+  background: var(--claude-surface) !important;
+  border: 1px solid var(--claude-border) !important;
+  border-radius: var(--claude-radius) !important;
+  margin: 8px 10px !important;
+  box-shadow: var(--claude-card-shadow);
+  backdrop-filter: blur(6px) saturate(110%);
+  transition: box-shadow 180ms ease, border-color 180ms ease;
+}
+
+[data-testid='primaryColumn'] article:hover,
+[role='main'] [data-testid='cellInnerDiv'] article:hover {
+  box-shadow: var(--claude-card-shadow-hover);
+  border-color: #cfc8ba !important;
+}
+
+[data-testid='cellInnerDiv'] {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+[data-testid='cellInnerDiv'] > div {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   TAB BARS (For You/Following, Profile Posts/Replies/etc)
+   ══════════════════════════════════════════════════════════ */
+
+[role='tablist'] {
+  background: rgba(246, 243, 237, 0.94) !important;
+  backdrop-filter: blur(12px) saturate(120%) !important;
+  border-bottom: 1px solid var(--claude-border) !important;
+}
+
+/* Tab text — all tabs */
+[role='tab'] span {
+  color: var(--claude-muted) !important;
+  font-weight: 500 !important;
+}
+
+/* Active tab text */
+[role='tab'][aria-selected='true'] span {
+  color: var(--claude-text) !important;
+  font-weight: 700 !important;
+}
+
+/* Tab hover background — subtle warm */
+[role='tab']:hover {
+  background: rgba(241, 237, 229, 0.6) !important;
+}
+
+/* NUKE every single background inside tabs — no salmon boxes */
+[role='tab'] *,
+[role='tab'] > div,
+[role='tab'] > div > div,
+[role='tab'] > div > div > div,
+[role='tab'] > div > div > div > div {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Active tab underline — use a bottom border instead of coloring child divs,
+   since X's nested div structure makes it impossible to isolate the indicator */
+[role='tab'][aria-selected='true'] {
+  border-bottom: 3px solid var(--claude-accent) !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   PROFILE PAGE
+   ══════════════════════════════════════════════════════════ */
+
+/* Profile header area — let the banner image show properly */
+[data-testid='primaryColumn'] > div > div:has(a[href$='/header_photo']) {
+  background: transparent !important;
+}
+
+/* Profile info section below the banner */
+[data-testid='primaryColumn'] [data-testid='UserName'],
+[data-testid='primaryColumn'] [data-testid='UserDescription'] {
+  color: var(--claude-text) !important;
+}
+
+/* Edit profile button */
+[data-testid='editProfileButton'],
+a[href='/settings/profile'] {
+  border-color: var(--claude-border) !important;
+  background: transparent !important;
+  color: var(--claude-text) !important;
+  border-radius: 999px !important;
+}
+
+/* Profile header inner sections — transparent */
+[data-testid='primaryColumn'] > div > div > div[style*='background'] {
+  /* Don't nuke banner images — only target solid color backgrounds */
+}
+
+/* User profile page cells */
+[data-testid='primaryColumn'] > div > div {
+  background-color: transparent !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   POST COMPOSER ("What's happening?" area)
+   Nuke all white backgrounds inside the composer, then
+   re-apply a warm translucent card on the outer wrapper.
+   ══════════════════════════════════════════════════════════ */
+
+/* Nuke every background inside the primary column top area */
+[data-testid='primaryColumn'] > div > div:first-child div,
+[data-testid='primaryColumn'] > div > div:nth-child(2) div,
+[data-testid='primaryColumn'] > div > div:nth-child(3) div {
+  background-color: transparent !important;
+}
+
+/* The composer wrapper itself — warm frosted card */
+[data-testid='primaryColumn'] > div > div:has([data-testid='toolBar']),
+[data-testid='primaryColumn'] > div > div:has([aria-label='Post text']),
+main > div > div:has([role='textbox'][contenteditable='true']) {
+  background: rgba(253, 251, 247, 0.90) !important;
+  border: 1.5px solid #ccc5b8 !important;
+  border-radius: var(--claude-radius) !important;
+  margin: 4px 10px 0 !important;
+  box-shadow: 0 2px 6px rgba(36, 34, 29, 0.08), 0 6px 20px rgba(36, 34, 29, 0.05) !important;
+  backdrop-filter: blur(8px) saturate(110%);
+}
+
+[data-testid='tweetTextarea_0'] {
+  background: transparent !important;
+  border: none !important;
+}
+
+[role='textbox'][contenteditable='true'],
+[contenteditable='true'][role='textbox'] {
+  background: transparent !important;
+  color: var(--claude-text) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+[aria-label='Post text'],
+[data-testid='tweetTextarea_0'] [data-contents='true'] {
+  background: transparent !important;
+  color: var(--claude-text) !important;
+  border: none !important;
+}
+
+[data-testid='toolBar'] {
+  background: transparent !important;
+  border-top: 1px solid var(--claude-border-light) !important;
+}
+
+/* The toolbar icons row and inner wrappers */
+[data-testid='toolBar'] div,
+[data-testid='toolBar'] > div,
+[data-testid='toolBar'] > div > div {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   SEARCH BAR
+   ══════════════════════════════════════════════════════════ */
+
+[data-testid='SearchBox_Search_Input'],
+[data-testid='SearchBox_Search_Input'] > div,
+[data-testid='SearchBox_Search_Input'] > div > div {
+  background: rgba(246, 243, 237, 0.96) !important;
+  border: 1.5px solid var(--claude-border) !important;
+  border-radius: 999px !important;
+  box-shadow: 0 1px 4px rgba(36, 34, 29, 0.06) inset !important;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+[data-testid='SearchBox_Search_Input']:focus-within,
+[data-testid='SearchBox_Search_Input']:focus-within > div,
+[data-testid='SearchBox_Search_Input']:focus-within > div > div {
+  border-color: var(--claude-blue) !important;
+  box-shadow: 0 0 0 3px var(--claude-blue-soft), 0 1px 4px rgba(36, 34, 29, 0.05) inset !important;
+  background: rgba(253, 251, 247, 1) !important;
+}
+
+[aria-label='Search query'],
+[data-testid='SearchBox_Search_Input'] input {
+  background: transparent !important;
+  color: var(--claude-text) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+[data-testid='SearchBox_Search_Input'] svg {
+  color: var(--claude-muted) !important;
+}
+
+/* Leave X's search flyout layout alone; only theme the actual input shell. */
+[role='search'] [role='listbox'],
+[role='search'] [data-testid='typeaheadRecentSearches'],
+[role='search'] [data-testid='typeaheadRecentSearches'] *,
+[role='search'] [data-testid='TypeaheadUser'],
+[role='search'] [data-testid='TypeaheadUser'] *,
+[role='search'] [data-testid='trend'],
+[role='search'] [data-testid='trend'] * {
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+[role='search'] [role='listbox'],
+[role='search'] [data-testid='typeaheadRecentSearches'] {
+  background: rgba(253, 251, 247, 0.98) !important;
+  border: 1px solid var(--claude-border) !important;
+  border-radius: var(--claude-radius) !important;
+  overflow: hidden !important;
+}
+
+[role='search'] [data-testid='TypeaheadUser'],
+[role='search'] [data-testid='trend'] {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+}
+
+[role='search'] article,
+[role='search'] article:hover,
+[role='search'] [role='dialog'] > div,
+[role='search'] [role='menu'],
+[role='search'] [role='listbox'] [role='link'] {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  margin: 0 !important;
+}
+
+[role='search'] [role='listbox'],
+[role='search'] [data-testid='typeaheadRecentSearches'],
+[role='search'] [data-testid='typeaheadRecentSearches'] * {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+}
+
+html.macx-lite-mode article,
+html.macx-lite-mode [data-testid='sidebarColumn'] section,
+html.macx-lite-mode [data-testid='sidebarColumn'] aside,
+html.macx-lite-mode [data-testid='primaryColumn'] > div > div:has([data-testid='toolBar']),
+html.macx-lite-mode [data-testid='primaryColumn'] > div > div:has([aria-label='Post text']),
+html.macx-lite-mode main > div > div:has([role='textbox'][contenteditable='true']),
+html.macx-lite-mode [role='tablist'],
+html.macx-lite-mode [data-testid='BottomBar'],
+html.macx-lite-mode [data-testid='SearchBox_Search_Input'],
+html.macx-lite-mode [data-testid='SearchBox_Search_Input'] > div,
+html.macx-lite-mode [data-testid='SearchBox_Search_Input'] > div > div {
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+[role='search'] input,
+input[placeholder='Search'] {
+  background: transparent !important;
+  color: var(--claude-text) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+[role='search'] input:focus,
+input[placeholder='Search']:focus {
+  outline: none !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   BUTTONS
+   ══════════════════════════════════════════════════════════ */
+
+/* General button rounding — but NOT tab elements */
+[role='button']:not([role='tab']),
+button:not([role='tab']) {
+  border-radius: var(--claude-radius-sm) !important;
+}
+
+/* Post button (inline) */
+[role='button'][data-testid='tweetButtonInline'],
+[role='button'][data-testid='tweetButton'] {
+  background: var(--claude-accent) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(212, 165, 141, 0.35) !important;
+  transition: background 160ms ease, transform 120ms ease;
+}
+
+[role='button'][data-testid='tweetButtonInline']:hover,
+[role='button'][data-testid='tweetButton']:hover {
+  background: var(--claude-accent-hover) !important;
+  transform: translateY(-1px);
+}
+
+[data-testid='tweetButtonInline'] span,
+[data-testid='tweetButton'] span {
+  color: #fff !important;
+  font-weight: 700 !important;
+}
+
+/* Left sidebar "Post" button */
+a[aria-label='Post'],
+[data-testid='SideNav_NewTweet_Button'] {
+  background: rgba(253, 251, 247, 0.94) !important;
+  border: 1.5px solid var(--claude-blue) !important;
+  box-shadow:
+    0 4px 14px rgba(90, 143, 168, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.7) inset !important;
+  backdrop-filter: blur(4px) saturate(110%);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+a[aria-label='Post']:hover,
+[data-testid='SideNav_NewTweet_Button']:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 20px rgba(90, 143, 168, 0.24),
+    0 1px 0 rgba(255, 255, 255, 0.7) inset !important;
+}
+
+[data-testid='SideNav_NewTweet_Button'] > div {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   TEXT & COLORS
+   ══════════════════════════════════════════════════════════ */
+
+span,
+a {
+  color: var(--claude-text);
+}
+
+/* Grey muted text → warm muted */
+span[style*='color: rgb(113, 118, 123)'] {
+  color: var(--claude-muted) !important;
+}
+
+/* X blue → warm blue */
+span[style*='color: rgb(29, 155, 240)'] {
+  color: var(--claude-blue) !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   SCROLLBAR
+   ══════════════════════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--claude-border);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c4bdb0;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   DIVIDERS & BORDERS
+   ══════════════════════════════════════════════════════════ */
+
+[role='separator'] {
+  border-color: var(--claude-border-light) !important;
+}
+
+header[role='banner'] {
+  border-color: var(--claude-border) !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   POPUPS, MODALS, HOVER CARDS, MENUS
+   ══════════════════════════════════════════════════════════ */
+
+[data-testid='sheetDialog'],
+[role='dialog'] > div {
+  background: var(--claude-surface-solid) !important;
+  border: 1px solid var(--claude-border) !important;
+  border-radius: var(--claude-radius) !important;
+}
+
+[data-testid='HoverCard'] > div,
+[data-testid='hoverCardParent'] > div > div {
+  background: var(--claude-surface-solid) !important;
+  border: 1px solid var(--claude-border) !important;
+  border-radius: var(--claude-radius) !important;
+  box-shadow: var(--claude-card-shadow-hover) !important;
+}
+
+[data-testid='Dropdown'],
+[role='menu'] {
+  background: var(--claude-surface-solid) !important;
+  border: 1px solid var(--claude-border) !important;
+  border-radius: var(--claude-radius) !important;
+  box-shadow: var(--claude-card-shadow-hover) !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   NAV HOVER STATES
+   ══════════════════════════════════════════════════════════ */
+
+[data-testid='SideNav'] a:hover > div {
+  background: var(--claude-surface-hover) !important;
+  border-radius: 999px !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   BOTTOM TAB BAR
+   ══════════════════════════════════════════════════════════ */
+
+[data-testid='BottomBar'] {
+  background: rgba(246, 243, 237, 0.95) !important;
+  backdrop-filter: blur(12px) saturate(120%) !important;
+  border-top: 1px solid var(--claude-border) !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   Z-INDEX
+   ══════════════════════════════════════════════════════════ */
+
+#react-root,
+main,
+header,
+nav,
+section,
+article,
+aside {
+  position: relative;
+  z-index: 2;
+}

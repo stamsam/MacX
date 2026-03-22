@@ -6,6 +6,14 @@ const themeCss = fs.readFileSync(path.join(__dirname, 'theme.css'), 'utf8');
 const preloadPath = path.join(__dirname, 'preload.js');
 const CACHE_CLEAR_INTERVAL_MS = 25 * 60 * 1000;
 const SOFT_RELOAD_IDLE_MS = 60 * 60 * 1000;
+const AUTH_DOMAINS = [
+  'accounts.google.com',
+  'appleid.apple.com',
+  'login.apple.com',
+  'oauth.x.com',
+  'api.x.com',
+  'x.com'
+];
 let liteModeEnabled = true;
 
 app.commandLine.appendSwitch(
@@ -32,6 +40,23 @@ function isHttpUrl(url) {
   try {
     const parsed = new URL(url);
     return parsed.protocol === 'https:' || parsed.protocol === 'http:';
+  } catch {
+    return false;
+  }
+}
+
+function isBlankPage(url) {
+  return url === 'about:blank' || url.startsWith('about:blank?');
+}
+
+function matchesDomain(hostname, domain) {
+  return hostname === domain || hostname.endsWith(`.${domain}`);
+}
+
+function isAuthDomain(url) {
+  try {
+    const parsed = new URL(url);
+    return AUTH_DOMAINS.some((domain) => matchesDomain(parsed.hostname, domain));
   } catch {
     return false;
   }
@@ -232,13 +257,114 @@ function buildAppMenu() {
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
+function attachAuthWindowHandlers(authWindow, parentWindow) {
+  authWindow.webContents.setWindowOpenHandler(({ url }) => {
+    if (isAuthDomain(url) || isXDomain(url) || isBlankPage(url)) {
+      return {
+        action: 'allow',
+        overrideBrowserWindowOptions: {
+          width: 520,
+          height: 760,
+          minWidth: 440,
+          minHeight: 640,
+          backgroundColor: '#FFFFFF',
+          title: 'MacX Sign In',
+          titleBarStyle: 'default',
+          autoHideMenuBar: true,
+          show: false,
+          webPreferences: {
+            contextIsolation: true,
+            nodeIntegration: false,
+            partition: 'persist:macx',
+            spellcheck: false,
+            backgroundThrottling: true,
+            devTools: !app.isPackaged
+          }
+        }
+      };
+    }
+
+    if (isHttpUrl(url)) {
+      openLinkExternally(url);
+    }
+
+    return { action: 'deny' };
+  });
+
+  authWindow.webContents.on('will-navigate', (event, url) => {
+    if (isAuthDomain(url) || isXDomain(url) || isBlankPage(url)) {
+      return;
+    }
+
+    event.preventDefault();
+    openLinkExternally(url);
+  });
+
+  authWindow.webContents.on('did-navigate', (_event, url) => {
+    if (isBlankPage(url)) {
+      return;
+    }
+
+    if (isXDomain(url)) {
+      if (parentWindow && !parentWindow.isDestroyed()) {
+        parentWindow.webContents.reload();
+        parentWindow.focus();
+      }
+
+      if (!authWindow.isDestroyed()) {
+        authWindow.close();
+      }
+    }
+  });
+
+  authWindow.webContents.on('did-create-window', (childWindow) => {
+    attachAuthWindowHandlers(childWindow, parentWindow);
+
+    childWindow.once('ready-to-show', () => {
+      childWindow.show();
+    });
+  });
+
+  authWindow.once('ready-to-show', () => {
+    authWindow.show();
+  });
+}
+
 function attachLinkHandlers(win) {
   const { webContents } = win;
 
   webContents.setWindowOpenHandler(({ url }) => {
+    if (isAuthDomain(url) || isBlankPage(url)) {
+      return {
+        action: 'allow',
+        overrideBrowserWindowOptions: {
+          width: 520,
+          height: 760,
+          minWidth: 440,
+          minHeight: 640,
+          backgroundColor: '#FFFFFF',
+          title: 'MacX Sign In',
+          titleBarStyle: 'default',
+          autoHideMenuBar: true,
+          show: false,
+          webPreferences: {
+            contextIsolation: true,
+            nodeIntegration: false,
+            partition: 'persist:macx',
+            spellcheck: false,
+            backgroundThrottling: true,
+            devTools: !app.isPackaged
+          }
+        }
+      };
+    }
+
     if (isXDomain(url)) {
       createWindow(url);
-    } else if (isHttpUrl(url)) {
+      return { action: 'deny' };
+    }
+
+    if (isHttpUrl(url)) {
       openLinkExternally(url);
     }
 
@@ -246,12 +372,20 @@ function attachLinkHandlers(win) {
   });
 
   webContents.on('will-navigate', (event, url) => {
-    if (isXDomain(url)) {
+    if (isXDomain(url) || isAuthDomain(url)) {
       return;
     }
 
     event.preventDefault();
     openLinkExternally(url);
+  });
+
+  webContents.on('did-create-window', (childWindow) => {
+    attachAuthWindowHandlers(childWindow, win);
+
+    childWindow.once('ready-to-show', () => {
+      childWindow.show();
+    });
   });
 }
 

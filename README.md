@@ -13,6 +13,20 @@ This project is not affiliated with, endorsed by, or sponsored by X Corp.
 - Lite Mode to reduce blur and shadow overhead
 - Shareable Apple Silicon build output
 
+## Screenshots
+
+### Login
+
+![MacX login screen](media/screenshot-login.png)
+
+### Search
+
+![MacX search view](media/screenshot-home.png)
+
+### Profile
+
+![MacX profile view](media/screenshot-profile.png)
+
 ## Development
 
 ```bash
@@ -85,8 +99,19 @@ The archive is for Apple Silicon Macs. User sessions stay local, so each person 
 2. Move `MacX.app` into `Applications`.
 3. Open it. Because this build is ad-hoc signed and not notarized, macOS may warn that the app is from an unidentified developer. Right-click the app, choose `Open`, and confirm.
 
-If Gatekeeper still blocks launch:
+If Gatekeeper still blocks launch, you have two options:
+
+Option 1: Allow it in System Settings.
+
+- Open `System Settings`
+- Go to `Privacy & Security`
+- Scroll to the security section near the bottom
+- Click `Open Anyway` or allow `MacX.app` if macOS shows it there
+
+Option 2: Remove the quarantine flag in Terminal.
 
 ```bash
 xattr -dr com.apple.quarantine /Applications/MacX.app
 ```
+
+That command should be run in the macOS `Terminal` app.

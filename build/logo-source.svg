@@ -32,7 +32,10 @@
     </g>
     <rect x="164" y="164" width="696" height="696" rx="180" fill="#FCF8F1" fill-opacity="0.92" stroke="#E1D7C9" stroke-width="10"/>
     <path d="M302 728V296H392L512 534L632 296H722V728H638V436L534 632H490L386 436V728H302Z" fill="url(#accent)"/>
-    <circle cx="754" cy="270" r="52" fill="#5A8FA8"/>
-    <circle cx="754" cy="270" r="20" fill="#FCF8F1" fill-opacity="0.65"/>
+    <g transform="translate(700 216)">
+      <rect x="0" y="0" width="108" height="108" rx="32" fill="#5A8FA8"/>
+      <path d="M30 32L78 80" stroke="#FCF8F1" stroke-width="14" stroke-linecap="round"/>
+      <path d="M78 32L30 80" stroke="#FCF8F1" stroke-width="14" stroke-linecap="round"/>
+    </g>
   </g>
 </svg>

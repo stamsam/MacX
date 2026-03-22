@@ -39,13 +39,15 @@ npm start
 
 ## Build Assets
 
-To rebuild the app icon from the source SVG:
+The master icon artwork lives at `build/logo-master.png`.
+
+To rebuild the app icon set from that image:
 
 ```bash
 npm run build:assets
 ```
 
-The branding source lives at `build/logo-source.svg`.
+An editable vector source can still live at `build/logo-source.svg`, but the build uses `logo-master.png` directly.
 
 ## Build the App
 

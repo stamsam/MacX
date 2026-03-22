@@ -4,6 +4,7 @@ const { spawnSync } = require('child_process');
 
 const projectRoot = join(__dirname, '..');
 const buildDir = join(projectRoot, 'build');
+const masterPngPath = join(buildDir, 'logo-master.png');
 const svgPath = join(buildDir, 'logo-source.svg');
 const pngPath = join(buildDir, 'logo-source.png');
 const iconsetDir = join(buildDir, 'icon.iconset');
@@ -19,8 +20,7 @@ function run(command, args) {
 rmSync(iconsetDir, { recursive: true, force: true });
 mkdirSync(iconsetDir, { recursive: true });
 
-run('qlmanage', ['-t', '-s', '1024', '-o', buildDir, svgPath]);
-run('mv', [join(buildDir, 'logo-source.svg.png'), pngPath]);
+run('cp', [masterPngPath, pngPath]);
 
 const sizes = [
   ['16', 'icon_16x16.png'],
